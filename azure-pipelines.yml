@@ -5,13 +5,17 @@ pool:
   vmImage: 'Default' # Usamos Windows porque tu captura muestra que trabajas ahí
 
 steps:
-- task: Gradle@3
-  displayName: 'Ejecutar Build y Tests'
+- task: Gradle@4
   inputs:
     gradleWrapperFile: 'gradlew'
-    tasks: 'clean build test' # Aquí pones los comandos que probamos antes
+    workingDirectory: '$(System.DefaultWorkingDirectory)/gradlew'
+    options: '$(System.DefaultWorkingDirectory)/pipeline en Azure DevOps'
+    tasks: 'pipeline en Azure DevOps'
     publishJUnitResults: true
     testResultsFiles: '**/TEST-*.xml'
+    javaHomeOption: 'JDKVersion'
+    sonarQubeRunAnalysis: false
+    spotBugsAnalysis: false
 
 - task: PublishBuildArtifacts@1
   displayName: 'Guardar Artefactos (CD)'
