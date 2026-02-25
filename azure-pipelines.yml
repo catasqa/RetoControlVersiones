@@ -1,0 +1,21 @@
+trigger:
+- main  # Se ejecuta cuando hay cambios en la rama main
+
+pool:
+  vmImage: 'windows-latest' # Usamos Windows porque tu captura muestra que trabajas ahí
+
+steps:
+- task: Gradle@3
+  displayName: 'Ejecutar Build y Tests'
+  inputs:
+    gradleWrapperFile: 'gradlew'
+    tasks: 'clean build test' # Aquí pones los comandos que probamos antes
+    publishJUnitResults: true
+    testResultsFiles: '**/TEST-*.xml'
+
+- task: PublishBuildArtifacts@1
+  displayName: 'Guardar Artefactos (CD)'
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    ArtifactName: 'drop'
+    publishLocation: 'Container'
