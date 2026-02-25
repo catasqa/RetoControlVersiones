@@ -2,7 +2,7 @@ trigger:
 - main  # Se ejecuta cuando hay cambios en la rama main
 
 pool:
-  vmImage: 'windows-latest' # Usamos Windows porque tu captura muestra que trabajas ahí
+  vmImage: 'Default' # Usamos Windows porque tu captura muestra que trabajas ahí
 
 steps:
 - task: Gradle@3
